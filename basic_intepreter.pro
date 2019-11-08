@@ -17,12 +17,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Console.cpp \
+    evalstate.cpp \
+    exp.cpp \
     main.cpp \
-    basicwindow.cpp
+    basicwindow.cpp \
+    parser.cpp \
+    statement.cpp \
+    tokenizer.cpp
 
 HEADERS += \
     Console.h \
-    basicwindow.h
+    basicwindow.h \
+    evalstate.h \
+    exp.h \
+    parser.h \
+    statement.h \
+    tokenizer.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
