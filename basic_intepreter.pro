@@ -22,6 +22,7 @@ SOURCES += \
     main.cpp \
     basicwindow.cpp \
     parser.cpp \
+    program.cpp \
     statement.cpp \
     tokenizer.cpp
 
@@ -31,6 +32,7 @@ HEADERS += \
     evalstate.h \
     exp.h \
     parser.h \
+    program.h \
     statement.h \
     tokenizer.h
 

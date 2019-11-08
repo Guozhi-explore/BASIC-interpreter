@@ -2,7 +2,7 @@
 #define EXP_H
 
 #include<string>
-#include<map.h>
+
 #include "tokenizer.h"
 #include "evalstate.h"
 using namespace std;
@@ -15,15 +15,15 @@ public:
     exp();
     virtual ~exp();
     virtual int eval(evalstate &state)=0;
-    virtual string toString()=0;
+   // virtual string toString()=0;
     virtual ExpressionType type()=0;
 
     /*getter methods for convenience*/
-    virtual int getConstantValue();
+   /* virtual int getConstantValue();
     virtual string getIdentifierName();
     virtual string getOperator();
     virtual exp *getLHS();
-    virtual exp *getRHS();
+    virtual exp *getRHS();*/
 };
 
 class ConstantExp: public exp{
@@ -31,7 +31,7 @@ public:
     ConstantExp(int val);
 
     virtual int eval(evalstate &state);
-    virtual string toString();
+    //virtual string toString();
     virtual ExpressionType type();
     virtual int getConstantValue();
 
@@ -44,9 +44,9 @@ public:
     IdentifierExp(string name);
 
     virtual int eval(evalstate &state);
-    virtual string toString();
+    //virtual string toString();
     virtual ExpressionType type();
-    virtual string getIdentifierName();
+    string getIdentifierName();
 
 private:
     string name;
@@ -59,11 +59,11 @@ public:
     virtual ~CompoundExp();
 
     virtual int eval(evalstate &state);
-    virtual string toString();
+   // virtual string toString();
     virtual ExpressionType type();
-    virtual string getOperator();
-    virtual exp *getLHS();
-    virtual exp *getRHS();
+    string getOperator();
+    exp *getLHS();
+    exp *getRHS();
 private:
     string op;
     exp *lhs,*rhs;

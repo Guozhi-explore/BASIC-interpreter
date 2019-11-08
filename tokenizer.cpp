@@ -106,6 +106,12 @@ void Tokenizer::addNewSymbol(string token_string)
 }
 Tokenizer::Token Tokenizer::getToken()
 {
+    if(return_token.empty()==false)
+    {
+        Token token=return_token.front();
+        return_token.pop();
+        return token;
+    }
     if(this->token_list.empty()==false)
     {
         Token token=this->token_list.front();
@@ -116,6 +122,11 @@ Tokenizer::Token Tokenizer::getToken()
          Token token;
          return token;
     }
+}
+
+void Tokenizer::saveToken(Token token)
+{
+    return_token.push(token);
 }
 
 bool Tokenizer::alphabetAndDigit (char s)
@@ -165,5 +176,5 @@ bool Tokenizer::isReserveToken(string token_string)
 
 bool Tokenizer::hasMoreToken()
 {
-    return !this->token_list.empty();
+    return (!this->token_list.empty()||!this->return_token.empty());
 }

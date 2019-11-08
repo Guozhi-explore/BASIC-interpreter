@@ -23,6 +23,7 @@ class Tokenizer{
         bool ignoreBlankFlag;
         string input_line;
         queue<Token> token_list;
+        queue<Token> return_token;
 
         void addNewSymbol(string token_string);
         void parseInputLineToTokenList();

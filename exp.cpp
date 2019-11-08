@@ -5,6 +5,8 @@ exp::exp()
 
 }
 
+exp::~exp(){}
+
 /********************************ConstantExp************************/
 
 ConstantExp::ConstantExp(int val)
@@ -64,12 +66,18 @@ CompoundExp::CompoundExp(string op,exp *lhs,exp *rhs)
     this->rhs=rhs;
 }
 
+CompoundExp::~CompoundExp()
+{
+    delete lhs;
+    delete rhs;
+}
+
 int CompoundExp::eval(evalstate &state)
 {
     int rightValue=rhs->eval(state);
     if(op=="=")
     {
-        state.setValue(lhs->getIdentifierName(),rightValue);
+        state.setValue(((IdentifierExp*)lhs)->getIdentifierName(),rightValue);
         return rightValue;
     }
     int leftValue=lhs->eval(state);

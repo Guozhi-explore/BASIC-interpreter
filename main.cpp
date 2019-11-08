@@ -5,6 +5,7 @@
 #include<fstream>
 #include<string>
 #include"tokenizer.h"
+#include"parser.h"
 using namespace std;
 
 void handle(string input_line);
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
 }
 
 void handle(string input_line)
-{
+{   parser parser;
     Tokenizer tokenizer(input_line);
     Tokenizer::Token token;
     /*while(true)
@@ -53,7 +54,7 @@ void handle(string input_line)
         if(tokenizer.hasMoreToken())
         {
             //parse tokens to program
-
+            parser.parseExp(tokenizer);
         }else{
             //empty tokens just delete
         }
