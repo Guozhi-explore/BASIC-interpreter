@@ -36,9 +36,12 @@ int main(int argc, char *argv[])
 }
 
 void handle(string input_line,program &program, evalstate &evalstate)
-{   parser parser;
+{
+    parser parser;
     Tokenizer tokenizer(input_line);
     Tokenizer::Token token;
+    statement *statement;
+    int lineNumber;
     /*while(true)
     {
         token=tokenizer.getToken();
@@ -54,21 +57,23 @@ void handle(string input_line,program &program, evalstate &evalstate)
         printf("illegal token letter");
         break;
     case Tokenizer::NUMBER:
+        lineNumber=atoi(token.token_string.c_str());
         if(tokenizer.hasMoreToken())
         {
             //parse tokens to program
             //parser.parseExp(tokenizer);
-            program.addOrUpdateSourceCodeLine(atoi(token.token_string.c_str()),input_line);
+            program.addOrUpdateSourceCodeLine(lineNumber,input_line);
+            statement=parser.parseStatement(tokenizer);
+            program.addOrUpdateParsedStatement(lineNumber,statement);
         }else{
             //empty tokens just delete
         }
-
         break;
     case Tokenizer::RESERVE:
     {
         if(token.token_string=="RUN")
         {
-
+            program.run();
         }else{
             if(token.token_string=="CLEAR")
             {

@@ -3,6 +3,8 @@
 #include<map>
 #include<string>
 #include"statement.h"
+#include"evalstate.h"
+class evalstate;
 class statement;
 using namespace std;
 
@@ -19,11 +21,13 @@ public:
     statement *getLineStatement(int lineNumber);
     void ListSourceCode();
     void clear();
+    void run();
 
 private:
     map<int, string> sourceCodeArray;
     map<int,statement*> parsedStatementArray;
     map<int,int> nextStatementArray;
+    evalstate state;
 };
 
 #endif // PROGRAM_H

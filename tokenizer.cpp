@@ -176,5 +176,7 @@ bool Tokenizer::isReserveToken(string token_string)
 
 bool Tokenizer::hasMoreToken()
 {
-    return (!this->token_list.empty()||!this->return_token.empty());
+    if(this->return_token.empty()==false&&this->return_token.front().token_type!=NONE)
+        return true;
+    return (!this->token_list.empty());
 }

@@ -46,3 +46,34 @@ void program::clear()
     this->nextStatementArray.clear();
     this->parsedStatementArray.clear();
 }
+
+void program::run()
+{
+    int lineNumber;
+    if(sourceCodeArray.empty())
+        return;
+    map<int,string>::iterator iter=sourceCodeArray.begin();
+    lineNumber=iter->first;
+    /*init nextStatementArray as the lineNumber order*/
+    while(iter!=sourceCodeArray.end())
+    {
+        int line=iter->first;
+        nextStatementArray[line]=-1;
+        iter++;
+        if(iter!=sourceCodeArray.end())
+            nextStatementArray[line]=iter->first;
+    }
+
+    do{
+        printf("line: %d\n",lineNumber);
+        if(parsedStatementArray.find(lineNumber)==parsedStatementArray.end())
+        {
+            printf("jump to line which not declared,aborted\n");
+            return;
+        }
+        parsedStatementArray[lineNumber]->execute(state,nextStatementArray);
+        lineNumber=nextStatementArray[lineNumber];
+    }
+    // lineNumber is set to -1 in the end statement
+    while(lineNumber!=-1);
+}

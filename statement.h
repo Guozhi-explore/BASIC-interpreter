@@ -2,9 +2,8 @@
 #define STATEMENT_H
 #include<string>
 #include "evalstate.h"
-#include"program.h"
 #include"exp.h"
-class program;
+
 using namespace std;
 
 class statement
@@ -13,13 +12,13 @@ class statement
 public:
      statement();
     virtual ~statement();
-    virtual void execute(evalstate & state,program &program) = 0;
+    virtual void execute(evalstate & state,map<int,int> &nextStatementArray) = 0;
 };
 
 class LetStatement: public statement {
 public:
     LetStatement(CompoundExp *exp);
-    virtual void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray);
     ~LetStatement();
 private:
     CompoundExp *exp;
@@ -28,7 +27,7 @@ private:
 class PrintStatement: public statement {
 public:
     PrintStatement(exp *expression);
-    virtual void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray);
 private:
     exp *expression;
 };
@@ -36,7 +35,7 @@ private:
 class InputStatement: public statement {
 public:
     InputStatement(IdentifierExp *exp);
-    virtual void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray);
 private:
     IdentifierExp *exp;
 };
@@ -44,7 +43,7 @@ private:
 class GotoStatement: public statement {
 public:
     GotoStatement(exp *exp);
-    virtual void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray);
 private:
     exp *expression;
 };
@@ -52,7 +51,7 @@ private:
 class IfStatement: public statement {
 public:
     IfStatement(exp *left,string op,exp *right ,exp *linenumber);
-    virtual void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray);
 private:
     exp *left;
     exp *right;
@@ -63,7 +62,7 @@ private:
 class EndStatement:public statement{
 public:
     EndStatement();
-    virtual void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray);
 
 };
 
