@@ -4,9 +4,14 @@
 #include "evalstate.h"
 #include"program.h"
 #include"exp.h"
+class program;
+using namespace std;
+
 class statement
 {
+
 public:
+     statement();
     virtual ~statement();
     virtual void execute(evalstate & state,program &program) = 0;
 };
@@ -14,7 +19,7 @@ public:
 class LetStatement: public statement {
 public:
     LetStatement(CompoundExp *exp);
-    void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,program &program);
     ~LetStatement();
 private:
     CompoundExp *exp;
@@ -23,7 +28,7 @@ private:
 class PrintStatement: public statement {
 public:
     PrintStatement(exp *expression);
-    void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,program &program);
 private:
     exp *expression;
 };
@@ -31,7 +36,7 @@ private:
 class InputStatement: public statement {
 public:
     InputStatement(IdentifierExp *exp);
-    void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,program &program);
 private:
     IdentifierExp *exp;
 };
@@ -39,15 +44,15 @@ private:
 class GotoStatement: public statement {
 public:
     GotoStatement(exp *exp);
-    void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,program &program);
 private:
     exp *expression;
 };
 
 class IfStatement: public statement {
 public:
-    IfStatement(CompoundExp *exp);
-    void execute(evalstate &state,program &program);
+    IfStatement(exp *left,string op,exp *right ,exp *linenumber);
+    virtual void execute(evalstate &state,program &program);
 private:
     exp *left;
     exp *right;
@@ -58,7 +63,7 @@ private:
 class EndStatement:public statement{
 public:
     EndStatement();
-    void execute(evalstate &state,program &program);
+    virtual void execute(evalstate &state,program &program);
 
 };
 

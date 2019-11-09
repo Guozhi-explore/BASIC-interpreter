@@ -6,6 +6,78 @@ parser::parser()
 
 }
 
+statement *parser::parseStatement(Tokenizer &tokenizer)
+{
+    statement *parseStatementResult;
+    Tokenizer::Token token;
+    token=tokenizer.getToken();
+    if(token.token_string=="LET")
+    {
+        parseStatementResult=new LetStatement((CompoundExp*) parseExp(tokenizer));
+        return parseStatementResult;
+    }
+    if(token.token_string=="IF")
+    {
+        exp *leftExp,*rightExp,*lineExp;
+        string op;
+        leftExp=parseTokensByPrecedence(tokenizer,0);
+        //to kinds of condition: a=b or a<b a+b<c a>1
+        // the first kind can be parsed by parseTokenByPrecedence at a time
+        //however the second kind have to be parsed twice
+        if(leftExp->type()==COMPOUND)
+        {
+            CompoundExp *leftCompoundExp=(CompoundExp *)leftExp;
+            //first kind
+            if(leftCompoundExp->getOperator()=="=")
+            {
+                if(tokenizer.getToken().token_string=="THEN")
+                {
+                    lineExp=parseExp(tokenizer);
+                    return new IfStatement(leftCompoundExp->getLHS(),leftCompoundExp->getOperator()
+                                           ,leftCompoundExp->getRHS(),lineExp);
+                }
+                else{
+                    printf("miss then in IF expression\n");
+                    return nullptr;
+                }
+            }
+        }
+        //second kind
+        op=tokenizer.getToken().token_string;
+        rightExp=parseTokensByPrecedence(tokenizer,0);
+        if(tokenizer.getToken().token_string=="THEN")
+        {
+            lineExp=parseExp(tokenizer);
+            return new IfStatement(leftExp,op,rightExp,lineExp);
+        }
+        printf("miss then in IF expression\n");
+        return nullptr;
+    }
+    if(token.token_string=="PRINT")
+    {
+        parseStatementResult=new PrintStatement(parseExp(tokenizer));
+        return parseStatementResult;
+    }
+    if(token.token_string=="INPUT")
+    {
+        parseStatementResult=new InputStatement((IdentifierExp*) parseExp(tokenizer));
+        return parseStatementResult;
+    }
+    if(token.token_string=="GOTO")
+    {
+        parseStatementResult=new PrintStatement(parseExp(tokenizer));
+        return parseStatementResult;
+    }
+    if(token.token_string=="END")
+    {
+        parseStatementResult=new EndStatement();
+        return parseStatementResult;
+    }
+    if(token.token_string=="REM")
+        return nullptr;
+    printf("syntax error\n");
+    return nullptr;
+}
 //versio of ugly exp parser
 /*
  *

@@ -6,9 +6,11 @@
 #include<string>
 #include"tokenizer.h"
 #include"parser.h"
+#include"program.h"
+#include"evalstate.h"
 using namespace std;
 
-void handle(string input_line);
+void handle(string input_line,program &program, evalstate &evalstate);
 
 
 int main(int argc, char *argv[])
@@ -18,6 +20,8 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();*/
     string str;
+    program program;
+    evalstate evalstate;
     while(true)
     {
         try{
@@ -27,12 +31,11 @@ int main(int argc, char *argv[])
         {
             cerr<<"exception read user input\n";
         }
-        handle(str);
+        handle(str,program,evalstate);
     }
-    return 0;
 }
 
-void handle(string input_line)
+void handle(string input_line,program &program, evalstate &evalstate)
 {   parser parser;
     Tokenizer tokenizer(input_line);
     Tokenizer::Token token;
@@ -54,7 +57,8 @@ void handle(string input_line)
         if(tokenizer.hasMoreToken())
         {
             //parse tokens to program
-            parser.parseExp(tokenizer);
+            //parser.parseExp(tokenizer);
+            program.addOrUpdateSourceCodeLine(atoi(token.token_string.c_str()),input_line);
         }else{
             //empty tokens just delete
         }
@@ -68,11 +72,11 @@ void handle(string input_line)
         }else{
             if(token.token_string=="CLEAR")
             {
-
+                program.clear();
             }else{
                 if(token.token_string=="QUIT")
                 {
-
+                    exit(0);
                 }
                 else{
                     if(token.token_string=="HELP")
@@ -82,7 +86,7 @@ void handle(string input_line)
                     else{
                         if(token.token_string=="LIST")
                         {
-
+                            program.ListSourceCode();
                         }else{
                             if(token.token_string =="GOTO"||
                                     token.token_string=="IF"||

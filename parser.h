@@ -10,6 +10,7 @@ class parser
 {
 public:
     parser();
+    statement *parseStatement(Tokenizer &tokenizer);
     exp *parseExp(Tokenizer &tokenizer);
     int getPrecedence(string op);
 private:

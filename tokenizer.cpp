@@ -140,7 +140,7 @@ bool Tokenizer::alphabetAndDigit (char s)
 
 bool Tokenizer::isOperator (char s)
 {
-    return (s=='+'||s=='-'||s=='*'||s=='/'||s=='('||s==')'||s=='=');
+    return (s=='+'||s=='-'||s=='*'||s=='/'||s=='('||s==')'||s=='='||s=='>'||s=='<');
 }
 
 void Tokenizer::addIdOrReserve (string token_string)
