@@ -31,8 +31,8 @@ void Tokenizer::parseInputLineToTokenList ()
         }
         index++;
     }
+    if(token_string!="")
     addNewSymbol(token_string);
-
 }
 
 

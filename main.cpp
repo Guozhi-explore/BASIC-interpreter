@@ -70,7 +70,9 @@ void handle(string input_line,program &program, evalstate &evalstate)
             statement=parser.parseStatement(tokenizer);
             program.addOrUpdateParsedStatement(lineNumber,statement);
         }else{
-            //empty tokens just delete
+            //empty tokens just delete the code line if existed in program
+            if(program.hasLineNumberInSourceCode(lineNumber))
+                program.deleteLine(lineNumber);
         }
         break;
     case Tokenizer::RESERVE:

@@ -15,10 +15,8 @@ public:
     program();
     void addOrUpdateSourceCodeLine(int lineNumber,string codeLine);
     void addOrUpdateParsedStatement(int lineNumber,statement *statement);
-    int getNextCodeLineNumber(int lineNumber);
-    string getLineCode(int lineNumber);
-    int getNextStatementLineNumber(int lineNumber);
-    statement *getLineStatement(int lineNumber);
+    bool hasLineNumberInSourceCode(int lineNumber);
+    void deleteLine(int lineNUmber);
     void ListSourceCode();
     void clear();
     void run();

@@ -28,16 +28,15 @@ void program::ListSourceCode()
     }
 }
 
-int program::getNextStatementLineNumber(int lineNumber)
+bool program::hasLineNumberInSourceCode(int lineNumber)
 {
-    assert(this->nextStatementArray.find(lineNumber)!=nextStatementArray.end());
-    return this->nextStatementArray.at(lineNumber);
+    return this->sourceCodeArray.find(lineNumber)!=sourceCodeArray.end();
 }
 
-statement *program::getLineStatement(int lineNumber)
+void program::deleteLine(int lineNumber)
 {
-    assert(this->parsedStatementArray.find(lineNumber)!=this->parsedStatementArray.end());
-    return this->parsedStatementArray.at(lineNumber);
+    this->sourceCodeArray.erase(lineNumber);
+    this->parsedStatementArray.erase(lineNumber);
 }
 
 void program::clear()
