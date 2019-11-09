@@ -1,5 +1,7 @@
 #include "exp.h"
 #include "assert.h"
+#include<cmath>
+
 exp::exp()
 {
 
@@ -92,6 +94,10 @@ int CompoundExp::eval(evalstate &state)
         }
         return leftValue/rightValue;
     }
+    if(op=="^")
+    {
+        return pow(leftValue,rightValue);
+    }
     printf("illegal operator in expression");
     return 0;
 }
@@ -106,12 +112,12 @@ string CompoundExp::getOperator()
     return op;
 }
 
-exp *CompoundExp::getLHS()
+class::exp *CompoundExp::getLHS()
 {
     return this->lhs;
 }
 
-exp *CompoundExp::getRHS()
+class::exp *CompoundExp::getRHS()
 {
     return this->rhs;
 }

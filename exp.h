@@ -5,7 +5,6 @@
 
 #include "tokenizer.h"
 #include "evalstate.h"
-using namespace std;
 enum ExpressionType{CONSTANT,IDENTIFIER,COMPOUND};
 
 

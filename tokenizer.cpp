@@ -32,6 +32,7 @@ void Tokenizer::parseInputLineToTokenList ()
         index++;
     }
     addNewSymbol(token_string);
+
 }
 
 
@@ -63,14 +64,27 @@ void Tokenizer::addNewSymbol(string token_string)
             {
                 token.token_type=OPERATOR;
                 token.token_string=token_string[i];
-                this->token_list.push(token);
+
+                //to implement ** operator conveniently,replace ** with ^
+
+                if(!this->token_list.empty())
+
+                if(this->token_list.empty()==false&&
+                        this->token_list.back().token_string=="*"&&
+                        token.token_string=="*")
+                {
+                    token.token_string="^";
+                    //delete last token which is *
+                    this->token_list.erase(token_list.end()-1);
+                }
+                this->token_list.push_back(token);
                 string_head=i+1;
             }
             else{
                 //UNDEFINED TOKEN
                 token.token_type=ERROR;
                 token.token_string=token_string[i];
-                this->token_list.push(token);
+                this->token_list.push_back(token);
                 string_head=i+1;
             }
         }
@@ -94,7 +108,7 @@ Tokenizer::Token Tokenizer::getToken()
     if(this->token_list.empty()==false)
     {
         Token token=this->token_list.front();
-        this->token_list.pop();
+        this->token_list.erase(token_list.begin());
         return token;
     }
     else {
@@ -142,7 +156,7 @@ void Tokenizer::addIdOrReserveOrNumber (string token_string)
     if(is_number==true)
     {
         token.token_type=NUMBER;
-        this->token_list.push(token);
+        this->token_list.push_back(token);
         return;
     }
 
@@ -154,7 +168,7 @@ void Tokenizer::addIdOrReserveOrNumber (string token_string)
     else{
         token.token_type=ID;
     }
-    this->token_list.push(token);
+    this->token_list.push_back(token);
     return;
 }
 

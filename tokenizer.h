@@ -2,6 +2,7 @@
 #define TOKENIZER_H
 #include <string>
 #include<queue>
+#include<vector>
 using namespace std;
 
 class Tokenizer{
@@ -22,7 +23,7 @@ class Tokenizer{
         bool numberCanBeLineIndex;
         bool ignoreBlankFlag;
         string input_line;
-        queue<Token> token_list;
+        vector<Token> token_list;
         queue<Token> return_token;
 
         void addNewSymbol(string token_string);

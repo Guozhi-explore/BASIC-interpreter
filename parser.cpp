@@ -199,7 +199,6 @@ exp* parser::parseParenthesesScopeToken(Tokenizer &tokenizer)
 {
     exp *exp;
     Tokenizer::Token token=tokenizer.getToken();
-
     if(token.token_type==Tokenizer::ID)
         return new IdentifierExp(token.token_string);
     if(token.token_type==Tokenizer::NUMBER)
@@ -220,6 +219,8 @@ exp* parser::parseParenthesesScopeToken(Tokenizer &tokenizer)
 
 int parser::getPrecedence(string op)
 {
+    if(op=="^")
+        return 4;
     if(op=="*"||op=="/")
         return 3;
     if(op=="+"||op=="-")
