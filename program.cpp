@@ -49,18 +49,20 @@ void program::clear()
 
 void program::run()
 {
+    this->nextStatementArray.clear();
+    this->state.clear();
     int lineNumber;
-    if(sourceCodeArray.empty())
+    if(parsedStatementArray.empty())
         return;
-    map<int,string>::iterator iter=sourceCodeArray.begin();
+    map<int,statement*>::iterator iter=parsedStatementArray.begin();
     lineNumber=iter->first;
     /*init nextStatementArray as the lineNumber order*/
-    while(iter!=sourceCodeArray.end())
+    while(iter!=parsedStatementArray.end())
     {
         int line=iter->first;
         nextStatementArray[line]=-1;
         iter++;
-        if(iter!=sourceCodeArray.end())
+        if(iter!=parsedStatementArray.end())
             nextStatementArray[line]=iter->first;
     }
 
@@ -71,7 +73,11 @@ void program::run()
             printf("jump to line which not declared,aborted\n");
             return;
         }
-        parsedStatementArray[lineNumber]->execute(state,nextStatementArray);
+        //REM expression return nullptr when parsing
+        if(parsedStatementArray[lineNumber]!=nullptr)
+        {
+            parsedStatementArray[lineNumber]->execute(state,nextStatementArray,lineNumber);
+        }
         lineNumber=nextStatementArray[lineNumber];
     }
     // lineNumber is set to -1 in the end statement

@@ -65,7 +65,7 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
     }
     if(token.token_string=="GOTO")
     {
-        parseStatementResult=new PrintStatement(parseExp(tokenizer));
+        parseStatementResult=new GotoStatement(parseExp(tokenizer));
         return parseStatementResult;
     }
     if(token.token_string=="END")

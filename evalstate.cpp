@@ -23,3 +23,8 @@ bool evalstate::isDefined(string var)
 {
     return symbolTable.find(var)!=symbolTable.end();
 }
+
+void evalstate::clear()
+{
+    this->symbolTable.clear();
+}
