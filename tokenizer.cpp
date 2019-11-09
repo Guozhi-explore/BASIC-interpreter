@@ -40,28 +40,7 @@ void Tokenizer::addNewSymbol(string token_string)
     assert(token_string.size()>0);
     Token token;
     token.token_string=token_string;
-    assert(token_string==token.token_string);
-    //judge string is number or not
-    bool is_number=true;
-    for(int i=0;i<token_string.size();++i)
-    {
-        char c=token_string[i];
 
-        if(!isdigit(c))
-        {
-            is_number=false;
-            break;
-        }
-    }
-    if(is_number==true)
-    {
-        token.token_type=NUMBER;
-        Token token1;
-        token1.token_string=token_string;
-        token1.token_type=NUMBER;
-        this->token_list.push(token1);
-        return;
-    }
     //judge string is string or not
     if(token_string[0]=='\"')
     {
@@ -78,7 +57,7 @@ void Tokenizer::addNewSymbol(string token_string)
             if(string_rear>string_head)
             {
                 token.token_string=token_string.substr(string_head,string_rear-string_head);
-                this->addIdOrReserve(token.token_string);
+                this->addIdOrReserveOrNumber(token.token_string);
             }
             if(isOperator(token_string[i]))
             {
@@ -100,7 +79,7 @@ void Tokenizer::addNewSymbol(string token_string)
     if(string_rear>string_head)
     {
         token.token_string=token_string.substr(string_head,string_rear-string_head);
-        this->addIdOrReserve(token.token_string);
+        this->addIdOrReserveOrNumber(token.token_string);
     }
 
 }
@@ -143,10 +122,31 @@ bool Tokenizer::isOperator (char s)
     return (s=='+'||s=='-'||s=='*'||s=='/'||s=='('||s==')'||s=='='||s=='>'||s=='<');
 }
 
-void Tokenizer::addIdOrReserve (string token_string)
+void Tokenizer::addIdOrReserveOrNumber (string token_string)
 {
     Token token;
     token.token_string=token_string;
+
+    /*judge string is number of not*/
+    bool is_number=true;
+    for(int i=0;i<token_string.size();++i)
+    {
+        char c=token_string[i];
+
+        if(!isdigit(c))
+        {
+            is_number=false;
+            break;
+        }
+    }
+    if(is_number==true)
+    {
+        token.token_type=NUMBER;
+        this->token_list.push(token);
+        return;
+    }
+
+    /*judge string is reserve or token*/
     if(isReserveToken(token_string))
     {
         token.token_type=RESERVE;

@@ -31,7 +31,9 @@ int main(int argc, char *argv[])
         {
             cerr<<"exception read user input\n";
         }
-        handle(str,program,evalstate);
+        if(str!=""){
+         handle(str,program,evalstate);
+        }
     }
 }
 

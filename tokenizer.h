@@ -29,7 +29,7 @@ class Tokenizer{
         void parseInputLineToTokenList();
         bool alphabetAndDigit(char s);
         bool isOperator(char s);
-        void addIdOrReserve(string token_string);
+        void addIdOrReserveOrNumber(string token_string);
         bool isReserveToken(string token_string);
     public:
         Tokenizer(string input_line);

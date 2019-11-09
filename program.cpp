@@ -67,7 +67,6 @@ void program::run()
     }
 
     do{
-        printf("line: %d\n",lineNumber);
         if(parsedStatementArray.find(lineNumber)==parsedStatementArray.end())
         {
             printf("jump to line which not declared,aborted\n");
