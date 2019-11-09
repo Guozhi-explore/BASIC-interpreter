@@ -17,11 +17,11 @@ void handle(string input_line,program &program, evalstate &evalstate);
 
 int main(int argc, char *argv[])
 {
-   /* QApplication a(argc, argv);
+    QApplication a(argc, argv);
     BasicWindow w;
     w.show();
-    return a.exec();*/
-    string str;
+    return a.exec();
+    /*string str;
     program program;
     evalstate evalstate;
     while(true)
@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
         if(str!=""){
          handle(str,program,evalstate);
         }
-    }
+    }*/
 }
-
+/*
 void handle(string input_line,program &program, evalstate &evalstate)
 {
     parser parser;
@@ -53,7 +53,7 @@ void handle(string input_line,program &program, evalstate &evalstate)
             break;
         printf("%s,  %d\n",token.token_string.c_str(),token.token_type);
     }*/
-    token=tokenizer.getToken();
+    /*token=tokenizer.getToken();
     switch (token.token_type) {
     case Tokenizer::NONE:
         break;
@@ -149,4 +149,5 @@ void handle(string input_line,program &program, evalstate &evalstate)
         break;
     }
     return;
-}
+}*/
+

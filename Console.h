@@ -13,8 +13,11 @@ class Console : public QTextEdit
 public:
     explicit Console(QWidget *parent = nullptr);
 
+signals:
+    void newLineWritten(string newline);
 
 public slots:
+    void clear();
     void write(QString msg);
 
 protected:
