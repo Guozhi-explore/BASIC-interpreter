@@ -4,10 +4,12 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<map>
 #include"tokenizer.h"
 #include"parser.h"
 #include"program.h"
 #include"evalstate.h"
+#include"statement.h"
 using namespace std;
 
 void handle(string input_line,program &program, evalstate &evalstate);
@@ -105,6 +107,33 @@ void handle(string input_line,program &program, evalstate &evalstate)
                             else{
                                 //token.token_string belong to{LET,PRINT,INPUT}
                                 //parse rest tokens
+                                {
+
+                                    if(token.token_string=="LET")
+                                    {
+                                        tokenizer.saveToken(token);
+                                        statement=parser.parseStatement(tokenizer);
+                                        LetStatement *letstatement=(LetStatement*) statement;
+                                        letstatement->execute(evalstate);
+                                        return;
+                                    }
+                                    if(token.token_string=="PRINT")
+                                    {
+                                        tokenizer.saveToken(token);
+                                        statement=parser.parseStatement(tokenizer);
+                                        PrintStatement *printstatement=(PrintStatement*)statement;
+                                        printstatement->execute(evalstate);
+                                        return;
+                                    }
+                                    if(token.token_string=="INPUT")
+                                    {
+                                        tokenizer.saveToken(token);
+                                        statement=parser.parseStatement(tokenizer);
+                                        InputStatement *inputstatement=(InputStatement*) statement;
+                                        inputstatement->execute(evalstate);
+                                        return;
+                                    }
+                                }
                             }
                         }
                     }

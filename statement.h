@@ -19,6 +19,7 @@ public:
 class LetStatement: public statement {
 public:
     LetStatement(CompoundExp *exp);
+    void execute(evalstate &state);
     virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
     ~LetStatement();
 private:
@@ -28,6 +29,7 @@ private:
 class PrintStatement: public statement {
 public:
     PrintStatement(exp *expression);
+    void execute(evalstate &state);
     virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
 private:
     exp *expression;
@@ -36,6 +38,7 @@ private:
 class InputStatement: public statement {
 public:
     InputStatement(IdentifierExp *exp);
+    void execute(evalstate &state);
     virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
 private:
     IdentifierExp *identifierexp;

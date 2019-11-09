@@ -9,7 +9,12 @@ LetStatement::LetStatement(CompoundExp *exp)
     this->compoundexp=exp;
 }
 
-void LetStatement::execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine)
+void LetStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+{
+    this->execute(state);
+}
+
+void LetStatement::execute(evalstate &state)
 {
     exp *leftExp,*rightExp;
     string leftName;
@@ -39,6 +44,10 @@ void PrintStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
     printf("%d\n",this->expression->eval(state));
 }
 
+void PrintStatement::execute(evalstate &state)
+{
+    printf("%d\n",this->expression->eval(state));
+}
 InputStatement::InputStatement(IdentifierExp *identifierExp)
 {
     identifierexp=identifierExp;
@@ -46,12 +55,16 @@ InputStatement::InputStatement(IdentifierExp *identifierExp)
 
 void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
 {
+   this->execute(state);
+}
+
+void InputStatement::execute(evalstate &state)
+{
     int value;
     printf("input a number:\t");
     cin>>value;
     state.setValue(this->identifierexp->getIdentifierName(),value);
 }
-
 GotoStatement::GotoStatement(exp *exp)
 {
     this->expression=exp;
