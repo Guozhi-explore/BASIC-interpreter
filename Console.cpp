@@ -70,10 +70,23 @@ void Console::keyPressEvent(QKeyEvent *event)
         cursor.movePosition(QTextCursor::End);
         cursor.select(QTextCursor::LineUnderCursor);
         string lastLine = cursor.selectedText().toStdString();
+        if(INPUTstatement==true)
+        {
+            inputValue=atoi(lastLine.c_str());
+            INPUTstatement=false;
+        }
+        else{
         newLineWritten(lastLine);
+        }
     }
     QTextEdit::keyPressEvent(event);
 }
 
+int Console::getInputValue(){
+    if(this->INPUTstatement=true){
+       this->letHandleThreadSleep();
+    }
+    return inputValue;
+}
 
 

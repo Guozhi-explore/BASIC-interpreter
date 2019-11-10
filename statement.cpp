@@ -62,7 +62,8 @@ InputStatement::InputStatement(IdentifierExp *identifierExp)
 //in this way, run process can't input a value
 void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
-   this->execute(state,console);
+   int value=console.getInputValue();
+   state.setValue(this->identifierexp->getIdentifierName(),value);
 }
 
 void InputStatement::execute(evalstate &state,Console &console)

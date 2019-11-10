@@ -20,6 +20,7 @@ SOURCES += \
     error.cpp \
     evalstate.cpp \
     exp.cpp \
+    handleinputlinethread.cpp \
     main.cpp \
     basicwindow.cpp \
     parser.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     error.h \
     evalstate.h \
     exp.h \
+    handleinputlinethread.h \
     parser.h \
     program.h \
     statement.h \

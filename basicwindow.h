@@ -3,8 +3,8 @@
 
 
 #include <QMainWindow>
-#include"Console.h"
-
+#include<QThread>
+#include"handleinputlinethread.h"
 #include"program.h"
 #include"evalstate.h"
 #include"parser.h"
@@ -20,6 +20,7 @@ public:
 public slots:
     void receiveNewLine(string line);
 private:
+    HandleInputLineThread *thread;
     Console *console;
     program _program;
     evalstate _evalstate;
@@ -27,6 +28,6 @@ private:
     static const int BASIC_WINDOW_HEIGHT = 600;
 
     // save and handle each input_line
-    void handle(string input_line,program &_program, evalstate &_evalstate,Console &console);
+    //void handle(string input_line,program &_program, evalstate &_evalstate,Console &console);
 };
 #endif // BASICWINDOW_H

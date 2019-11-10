@@ -16,6 +16,8 @@ public:
     explicit Console(QWidget *parent = nullptr);
 signals:
     void newLineWritten(string newline);
+    void letHandleThreadSleep();
+    void letHandleThreadRecover();
 
 public slots:
     void clear();
@@ -31,6 +33,9 @@ public:
     evalstate *inputEvalstate;
     IdentifierExp *inputIdentifierExp;
     bool isInputValue=false;
+    int getInputValue();
+    bool INPUTstatement=false;
+    int inputValue;
 };
 
 #endif // CONSOLE_H
