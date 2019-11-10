@@ -1,5 +1,7 @@
 #include "statement.h"
 #include"assert.h"
+#include"output.h"
+
 statement::statement(){}
 
 statement::~statement(){}
@@ -41,12 +43,13 @@ PrintStatement::PrintStatement(exp *exp)
 
 void PrintStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
 {
-    printf("%d\n",this->expression->eval(state));
+    this->execute(state);
 }
 
 void PrintStatement::execute(evalstate &state)
 {
-    printf("%d\n",this->expression->eval(state));
+    inputAndOutput output;
+    output.sendOutput(to_string(this->expression->eval(state)));
 }
 InputStatement::InputStatement(IdentifierExp *identifierExp)
 {
@@ -61,7 +64,8 @@ void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
 void InputStatement::execute(evalstate &state)
 {
     int value;
-    printf("input a number:\t");
+
+    sendToOutput("input a number:\t");
     cin>>value;
     state.setValue(this->identifierexp->getIdentifierName(),value);
 }

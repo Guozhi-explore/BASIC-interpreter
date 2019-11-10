@@ -17,10 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Console.cpp \
+    error.cpp \
     evalstate.cpp \
     exp.cpp \
     main.cpp \
     basicwindow.cpp \
+    output.cpp \
     parser.cpp \
     program.cpp \
     statement.cpp \
@@ -29,8 +31,10 @@ SOURCES += \
 HEADERS += \
     Console.h \
     basicwindow.h \
+    error.h \
     evalstate.h \
     exp.h \
+    output.h \
     parser.h \
     program.h \
     statement.h \

@@ -1,5 +1,6 @@
 #include "basicwindow.h"
 
+#include"error.h"
 BasicWindow::BasicWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -7,7 +8,7 @@ BasicWindow::BasicWindow(QWidget *parent)
     this->setFixedSize(BASIC_WINDOW_WIDTH,BASIC_WINDOW_HEIGHT);
     console=new Console(this);
     console->setGeometry(0, 0, BASIC_WINDOW_WIDTH, BASIC_WINDOW_HEIGHT);
-    this->console->write("welcom to basic intepreter");
+    this->console->write("welcom to basic intepreter\n");
     connect(console,SIGNAL(newLineWritten(string)),this,SLOT(receiveNewLine(string)));
 }
 
@@ -17,7 +18,14 @@ BasicWindow::~BasicWindow()
 
 void BasicWindow::receiveNewLine(string str)
 {
-    this->handle(str,_program,_evalstate);
+    try{
+        this->handle(str,_program,_evalstate);
+    }
+    catch (ErrorException & ex) {
+         if(ex.getMessage()!="") {
+            console->write(ex.getMessage());
+         }
+      }
 }
 
 void BasicWindow::handle(string input_line,program &_program, evalstate &_evalstate)
@@ -27,13 +35,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
     Tokenizer::Token token;
     statement *statement;
     int lineNumber;
-    /*while(true)
-    {
-        token=tokenizer.getToken();
-        if(token.token_type==Tokenizer::NONE)
-            break;
-        printf("%s,  %d\n",token.token_string.c_str(),token.token_type);
-    }*/
+
     token=tokenizer.getToken();
     switch (token.token_type) {
     case Tokenizer::NONE:
@@ -73,7 +75,9 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
                 else{
                     if(token.token_string=="HELP")
                     {
-
+                        printToConsole("if you are not familiar with BASIC yet, look at\n"
+                              "https://ipads.se.sjtu.edu.cn/courses/sep/proj2.pdf\n"
+                              "for more information\n");
                     }
                     else{
                         if(token.token_string=="LIST")
@@ -126,7 +130,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
     }
         break;
     default:
-        printf("illegal token\n");
+        error("illegal token\n");
         break;
     }
     return;

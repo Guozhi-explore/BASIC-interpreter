@@ -1,6 +1,8 @@
 #include "parser.h"
 #include "assert.h"
 #include<stack>
+#include"error.h"
+
 parser::parser()
 {
 
@@ -37,7 +39,7 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
                                            ,leftCompoundExp->getRHS(),lineExp);
                 }
                 else{
-                    printf("miss then in IF expression\n");
+                    error("miss then in IF expression");
                     return nullptr;
                 }
             }
@@ -50,7 +52,7 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
             lineExp=parseExp(tokenizer);
             return new IfStatement(leftExp,op,rightExp,lineExp);
         }
-        printf("miss then in IF expression\n");
+        error("miss then in IF expression\n");
         return nullptr;
     }
     if(token.token_string=="PRINT")
@@ -75,7 +77,7 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
     }
     if(token.token_string=="REM")
         return nullptr;
-    printf("syntax error\n");
+    error("syntax error\n");
     return nullptr;
 }
 //versio of ugly exp parser
@@ -170,7 +172,7 @@ exp * parser::parseExp(Tokenizer &tokenizer)
     exp *parseResult=parseTokensByPrecedence(tokenizer,0);
     if(tokenizer.hasMoreToken())
     {
-        printf("redundant words :%s",tokenizer.getToken().token_string.c_str());
+        error("redundant words : "+tokenizer.getToken().token_string);
     }
     return parseResult;
 }
@@ -199,19 +201,21 @@ exp* parser::parseParenthesesScopeToken(Tokenizer &tokenizer)
 {
     exp *exp;
     Tokenizer::Token token=tokenizer.getToken();
+    if(token.token_type==Tokenizer::NONE)
+        error("miss token");
     if(token.token_type==Tokenizer::ID)
         return new IdentifierExp(token.token_string);
     if(token.token_type==Tokenizer::NUMBER)
         return new ConstantExp(atoi(token.token_string.c_str()));
     if(token.token_string!="(")
     {
-        printf("illegal expression\n");
+        error("illegal expression\n");
         return nullptr;
     }
     exp=parseTokensByPrecedence(tokenizer,0);
     if(tokenizer.getToken().token_string!=")")
     {
-        printf("( and ) unblanced\n");
+        error("( and ) unblanced\n");
         return nullptr;
     }
     return exp;

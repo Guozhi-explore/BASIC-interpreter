@@ -18,7 +18,7 @@ signals:
 
 public slots:
     void clear();
-    void write(QString msg);
+    void write(string msg);
 
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;

@@ -5,6 +5,7 @@
 #include<string>
 #include<exp.h>
 #include"statement.h"
+#include"errno.h"
 
 class parser
 {

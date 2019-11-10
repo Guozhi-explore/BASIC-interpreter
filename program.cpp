@@ -1,6 +1,6 @@
 #include "program.h"
 #include "assert.h"
-
+#include"error.h"
 
 program::program()
 {
@@ -21,11 +21,14 @@ void program::ListSourceCode()
 {
     map<int,string>::iterator iterator;
     iterator=sourceCodeArray.begin();
+    string printStringArray;
     while(iterator!=sourceCodeArray.end())
     {
-        printf("%s\n",iterator->second.c_str());
+        printStringArray.append(iterator->second+'\n');
+        //printToConsole(iterator->second);
         iterator++;
     }
+    printToConsole(printStringArray);
 }
 
 bool program::hasLineNumberInSourceCode(int lineNumber)
@@ -68,7 +71,7 @@ void program::run()
     do{
         if(parsedStatementArray.find(lineNumber)==parsedStatementArray.end())
         {
-            printf("jump to line which not declared,aborted\n");
+            error("jump to line which not declared,aborted\n");
             return;
         }
         //REM expression return nullptr when parsing

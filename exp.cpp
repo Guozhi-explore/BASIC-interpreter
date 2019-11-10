@@ -1,7 +1,7 @@
 #include "exp.h"
 #include "assert.h"
 #include<cmath>
-
+#include"error.h"
 exp::exp()
 {
 
@@ -43,7 +43,7 @@ int IdentifierExp::eval(evalstate &state)
 {
     if(!state.isDefined(name))
     {
-        printf("%s is undefined",name.c_str());
+        error(name+" is undefined");
         return -1;
     }
     return state.getValue(name);
@@ -89,8 +89,8 @@ int CompoundExp::eval(evalstate &state)
     if(op=="/"){
         if(rightValue==0)
         {
-            printf("Division by 0");
-            assert(rightValue!=0);
+            error("Division by 0");
+            //assert(rightValue!=0);
         }
         return leftValue/rightValue;
     }
@@ -98,7 +98,7 @@ int CompoundExp::eval(evalstate &state)
     {
         return pow(leftValue,rightValue);
     }
-    printf("illegal operator in expression");
+    error("illegal operator in expression");
     return 0;
 }
 

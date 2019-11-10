@@ -14,9 +14,11 @@ void Console::clear()
     this->clear();
 }
 
-void Console::write(QString msg)
+void Console::write(string msg)
 {
-    this->append(msg+'\n');
+    QString qstring;
+    qstring=QString::fromStdString(msg);
+    this->append(qstring);
 }
 
 void Console::keyPressEvent(QKeyEvent *event)
