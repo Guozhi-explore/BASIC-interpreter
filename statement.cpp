@@ -1,6 +1,5 @@
 #include "statement.h"
 #include"assert.h"
-#include"output.h"
 
 statement::statement(){}
 
@@ -11,7 +10,7 @@ LetStatement::LetStatement(CompoundExp *exp)
     this->compoundexp=exp;
 }
 
-void LetStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+void LetStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
     this->execute(state);
 }
@@ -41,40 +40,41 @@ PrintStatement::PrintStatement(exp *exp)
     expression=exp;
 }
 
-void PrintStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+void PrintStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
-    this->execute(state);
+    this->execute(state,console);
 }
 
-void PrintStatement::execute(evalstate &state)
+void PrintStatement::execute(evalstate &state,Console &console)
 {
-    inputAndOutput output;
-    output.sendOutput(to_string(this->expression->eval(state)));
+    int value=this->expression->eval(state);
+    console.write(to_string(value));
+    return;
 }
 InputStatement::InputStatement(IdentifierExp *identifierExp)
 {
     identifierexp=identifierExp;
 }
 
-void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
-   this->execute(state);
+   this->execute(state,console);
 }
 
-void InputStatement::execute(evalstate &state)
+void InputStatement::execute(evalstate &state,Console &console)
 {
     int value;
-
-    sendToOutput("input a number:\t");
-    cin>>value;
+    console.write("input "+this->identifierexp->getIdentifierName()+":");
+    value=console.getInputValue();
     state.setValue(this->identifierexp->getIdentifierName(),value);
+    return;
 }
 GotoStatement::GotoStatement(exp *exp)
 {
     this->expression=exp;
 }
 
-void GotoStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+void GotoStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
     nextStatementArray[currentLine]=this->expression->eval(state);
     return;
@@ -88,7 +88,7 @@ IfStatement::IfStatement(exp *left,string op,exp *right,exp *linenumber)
     this->lineNumber=linenumber;
 }
 
-void IfStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+void IfStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
     int leftValue,rightValue;
     int jumpLine;
@@ -106,7 +106,7 @@ void IfStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int
 
 EndStatement::EndStatement(){}
 
-void EndStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine)
+void EndStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
     //complete protocol
     nextStatementArray[currentLine]=-1;

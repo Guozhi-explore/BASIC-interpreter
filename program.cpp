@@ -49,7 +49,7 @@ void program::clear()
     this->parsedStatementArray.clear();
 }
 
-void program::run()
+void program::run(Console &console)
 {
     this->nextStatementArray.clear();
     this->state.clear();
@@ -77,7 +77,7 @@ void program::run()
         //REM expression return nullptr when parsing
         if(parsedStatementArray[lineNumber]!=nullptr)
         {
-            parsedStatementArray[lineNumber]->execute(state,nextStatementArray,lineNumber);
+            parsedStatementArray[lineNumber]->execute(state,nextStatementArray,lineNumber,console);
         }
         lineNumber=nextStatementArray[lineNumber];
     }

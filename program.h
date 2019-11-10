@@ -19,7 +19,7 @@ public:
     void deleteLine(int lineNUmber);
     void ListSourceCode();
     void clear();
-    void run();
+    void run(Console &console);
 
 private:
     map<int, string> sourceCodeArray;

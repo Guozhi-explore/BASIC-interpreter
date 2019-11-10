@@ -2,10 +2,10 @@
 #include <QKeyEvent>
 #include <QTextLine>
 #include <QTextCursor>
-
+#include "error.h"
 Console::Console(QWidget *parent) : QTextEdit(parent)
 {
-
+    sem_init(&waitForInput,0,0);
 }
 
 
@@ -40,7 +40,24 @@ void Console::keyPressEvent(QKeyEvent *event)
         cursor.movePosition(QTextCursor::End);
         cursor.select(QTextCursor::LineUnderCursor);
         string lastLine = cursor.selectedText().toStdString();
+        if(valueInputFlag==true)
+        {
+            inputValue=atoi(lastLine.c_str());
+            valueInputFlag=false;
+            sem_post(&waitForInput);
+        }
+        else
         newLineWritten(lastLine);
     }
     QTextEdit::keyPressEvent(event);
 }
+
+int Console::getInputValue()
+{
+    this->valueInputFlag=true;
+    //spin until user input a value,cause valueINputValue set to false
+    sem_wait(&waitForInput);
+    return this->inputValue;
+}
+
+

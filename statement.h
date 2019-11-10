@@ -5,7 +5,7 @@
 #include "evalstate.h"
 #include"exp.h"
 #include"errno.h"
-
+#include"Console.h"
 using namespace std;
 
 class statement
@@ -14,14 +14,14 @@ class statement
 public:
      statement();
     virtual ~statement();
-    virtual void execute(evalstate & state,map<int,int> &nextStatementArray,int currentLine) = 0;
+    virtual void execute(evalstate & state,map<int,int> &nextStatementArray,int currentLine,Console &console) = 0;
 };
 
 class LetStatement: public statement {
 public:
     LetStatement(CompoundExp *exp);
     void execute(evalstate &state);
-    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine,Console &console);
     ~LetStatement();
 private:
     CompoundExp *compoundexp;
@@ -30,8 +30,8 @@ private:
 class PrintStatement: public statement {
 public:
     PrintStatement(exp *expression);
-    void execute(evalstate &state);
-    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
+    void execute(evalstate &state,Console &console);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine,Console &console);
 private:
     exp *expression;
 };
@@ -39,8 +39,8 @@ private:
 class InputStatement: public statement {
 public:
     InputStatement(IdentifierExp *exp);
-    void execute(evalstate &state);
-    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
+    void execute(evalstate &state,Console &console);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine,Console &console);
 private:
     IdentifierExp *identifierexp;
 };
@@ -48,7 +48,7 @@ private:
 class GotoStatement: public statement {
 public:
     GotoStatement(exp *exp);
-    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine,Console &console);
 private:
     exp *expression;
 };
@@ -56,7 +56,7 @@ private:
 class IfStatement: public statement {
 public:
     IfStatement(exp *left,string op,exp *right ,exp *linenumber);
-    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine,Console &console);
 private:
     exp *left;
     exp *right;
@@ -67,7 +67,7 @@ private:
 class EndStatement:public statement{
 public:
     EndStatement();
-    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine);
+    virtual void execute(evalstate &state,map<int,int> &nextStatementArray,int currentLine,Console &console);
 
 };
 

@@ -10,6 +10,7 @@ BasicWindow::BasicWindow(QWidget *parent)
     console->setGeometry(0, 0, BASIC_WINDOW_WIDTH, BASIC_WINDOW_HEIGHT);
     this->console->write("welcom to basic intepreter\n");
     connect(console,SIGNAL(newLineWritten(string)),this,SLOT(receiveNewLine(string)));
+    //connect(&inputandoutput,SIGNAL(sendOutput(string)),console,SLOT(write(string)));
 }
 
 BasicWindow::~BasicWindow()
@@ -19,7 +20,7 @@ BasicWindow::~BasicWindow()
 void BasicWindow::receiveNewLine(string str)
 {
     try{
-        this->handle(str,_program,_evalstate);
+        this->handle(str,_program,_evalstate,*console);
     }
     catch (ErrorException & ex) {
          if(ex.getMessage()!="") {
@@ -28,7 +29,7 @@ void BasicWindow::receiveNewLine(string str)
       }
 }
 
-void BasicWindow::handle(string input_line,program &_program, evalstate &_evalstate)
+void BasicWindow::handle(string input_line,program &_program, evalstate &_evalstate,Console &console)
 {
     parser parser;
     Tokenizer tokenizer(input_line);
@@ -62,7 +63,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
     {
         if(token.token_string=="RUN")
         {
-            _program.run();
+            _program.run(console);
         }else{
             if(token.token_string=="CLEAR")
             {
@@ -109,7 +110,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
                                         tokenizer.saveToken(token);
                                         statement=parser.parseStatement(tokenizer);
                                         PrintStatement *printstatement=(PrintStatement*)statement;
-                                        printstatement->execute(_evalstate);
+                                        printstatement->execute(_evalstate,console);
                                         return;
                                     }
                                     if(token.token_string=="INPUT")
@@ -117,7 +118,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
                                         tokenizer.saveToken(token);
                                         statement=parser.parseStatement(tokenizer);
                                         InputStatement *inputstatement=(InputStatement*) statement;
-                                        inputstatement->execute(_evalstate);
+                                        inputstatement->execute(_evalstate,console);
                                         return;
                                     }
                                 }

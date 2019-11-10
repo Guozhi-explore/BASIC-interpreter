@@ -9,8 +9,10 @@ class inputAndOutput:public QWidget
     Q_OBJECT
 public:
     inputAndOutput();
+
 signals:
-    void sendOutput(string str);
+    void  sendOutput(string str);
+    void  receiveInput(string value);
 };
 
 #endif // OUTPUT_H
