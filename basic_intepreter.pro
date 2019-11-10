@@ -22,7 +22,6 @@ SOURCES += \
     exp.cpp \
     main.cpp \
     basicwindow.cpp \
-    output.cpp \
     parser.cpp \
     program.cpp \
     statement.cpp \
@@ -34,7 +33,6 @@ HEADERS += \
     error.h \
     evalstate.h \
     exp.h \
-    output.h \
     parser.h \
     program.h \
     statement.h \

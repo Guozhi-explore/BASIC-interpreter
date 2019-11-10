@@ -48,7 +48,7 @@ void PrintStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
 void PrintStatement::execute(evalstate &state,Console &console)
 {
     int value=this->expression->eval(state);
-    console.write(to_string(value));
+    console.writePrintMsg(to_string(value));
     return;
 }
 InputStatement::InputStatement(IdentifierExp *identifierExp)
@@ -63,7 +63,7 @@ void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
 
 void InputStatement::execute(evalstate &state,Console &console)
 {
-    console.write("input "+this->identifierexp->getIdentifierName()+":");
+    console.writePrintMsg("input "+this->identifierexp->getIdentifierName()+":");
     console.isInputValue=true;
     console.inputEvalstate=&state;
     console.inputIdentifierExp=this->identifierexp;

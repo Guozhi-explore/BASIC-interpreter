@@ -17,18 +17,16 @@ void program::addOrUpdateParsedStatement(int lineNumber, statement *statement)
     parsedStatementArray[lineNumber]=statement;
 }
 
-void program::ListSourceCode()
+void program::ListSourceCode(Console &console)
 {
     map<int,string>::iterator iterator;
     iterator=sourceCodeArray.begin();
-    string printStringArray;
     while(iterator!=sourceCodeArray.end())
     {
-        printStringArray.append(iterator->second+'\n');
+        console.writePrintMsg(iterator->second);
         //printToConsole(iterator->second);
         iterator++;
     }
-    printToConsole(printStringArray);
 }
 
 bool program::hasLineNumberInSourceCode(int lineNumber)
@@ -71,7 +69,7 @@ void program::run(Console &console)
     do{
         if(parsedStatementArray.find(lineNumber)==parsedStatementArray.end())
         {
-            error("jump to line which not declared,aborted\n");
+            error("jump to line which not declared,aborted");
             return;
         }
         //REM expression return nullptr when parsing

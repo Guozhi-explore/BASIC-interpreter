@@ -52,7 +52,7 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
             lineExp=parseExp(tokenizer);
             return new IfStatement(leftExp,op,rightExp,lineExp);
         }
-        error("miss then in IF expression\n");
+        error("miss then in IF expression");
         return nullptr;
     }
     if(token.token_string=="PRINT")
@@ -77,7 +77,7 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
     }
     if(token.token_string=="REM")
         return nullptr;
-    error("syntax error\n");
+    error("syntax error");
     return nullptr;
 }
 //versio of ugly exp parser
@@ -209,13 +209,13 @@ exp* parser::parseParenthesesScopeToken(Tokenizer &tokenizer)
         return new ConstantExp(atoi(token.token_string.c_str()));
     if(token.token_string!="(")
     {
-        error("illegal expression\n");
+        error("illegal expression");
         return nullptr;
     }
     exp=parseTokensByPrecedence(tokenizer,0);
     if(tokenizer.getToken().token_string!=")")
     {
-        error("( and ) unblanced\n");
+        error("( and ) unblanced");
         return nullptr;
     }
     return exp;

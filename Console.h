@@ -20,7 +20,10 @@ signals:
 public slots:
     void clear();
     void write(string msg);
-
+    //void writeCommand(string msg);
+    void writeErrorMsg(string msg);
+    void writePrintMsg(string msg);
+    void writeHelpMsg(string msg);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
 

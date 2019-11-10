@@ -8,7 +8,7 @@ BasicWindow::BasicWindow(QWidget *parent)
     this->setFixedSize(BASIC_WINDOW_WIDTH,BASIC_WINDOW_HEIGHT);
     console=new Console(this);
     console->setGeometry(0, 0, BASIC_WINDOW_WIDTH, BASIC_WINDOW_HEIGHT);
-    this->console->write("welcom to basic intepreter\n");
+    this->console->write("Minimal BASIC -- Type HELP for help\n\n");
     connect(console,SIGNAL(newLineWritten(string)),this,SLOT(receiveNewLine(string)));
     //connect(&inputandoutput,SIGNAL(sendOutput(string)),console,SLOT(write(string)));
 }
@@ -34,7 +34,7 @@ void BasicWindow::receiveNewLine(string str)
     }
     catch (ErrorException & ex) {
          if(ex.getMessage()!="") {
-            console->write(ex.getMessage());
+            console->writeErrorMsg(ex.getMessage());
          }
       }
 }
@@ -52,7 +52,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
     case Tokenizer::NONE:
         break;
     case Tokenizer::ERROR:
-        printf("illegal token letter");
+        error("illegal token letter");
         break;
     case Tokenizer::NUMBER:
         lineNumber=atoi(token.token_string.c_str());
@@ -86,21 +86,21 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
                 else{
                     if(token.token_string=="HELP")
                     {
-                        printToConsole("if you are not familiar with BASIC yet, look at\n"
+                        console.writeHelpMsg("if you are not familiar with BASIC yet, look at\n"
                               "https://ipads.se.sjtu.edu.cn/courses/sep/proj2.pdf\n"
                               "for more information\n");
                     }
                     else{
                         if(token.token_string=="LIST")
                         {
-                            _program.ListSourceCode();
+                            _program.ListSourceCode(console);
                         }else{
                             if(token.token_string =="GOTO"||
                                     token.token_string=="IF"||
                                     token.token_string=="REM"||
                                     token.token_string=="END")
                             {
-                                printf("error token\n");
+                                error("error token");
                             }
                             else{
                                 //token.token_string belong to{LET,PRINT,INPUT}
@@ -141,7 +141,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
     }
         break;
     default:
-        error("illegal token\n");
+        error("illegal token");
         break;
     }
     return;

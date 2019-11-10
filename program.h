@@ -17,7 +17,7 @@ public:
     void addOrUpdateParsedStatement(int lineNumber,statement *statement);
     bool hasLineNumberInSourceCode(int lineNumber);
     void deleteLine(int lineNUmber);
-    void ListSourceCode();
+    void ListSourceCode(Console &console);
     void clear();
     void run(Console &console);
 

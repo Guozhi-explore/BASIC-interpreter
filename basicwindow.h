@@ -23,7 +23,7 @@ private:
     Console *console;
     program _program;
     evalstate _evalstate;
-    static const int BASIC_WINDOW_WIDTH = 800;
+    static const int BASIC_WINDOW_WIDTH = 500;
     static const int BASIC_WINDOW_HEIGHT = 600;
     void handle(string input_line,program &_program, evalstate &_evalstate,Console &console);
 };

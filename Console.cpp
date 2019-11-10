@@ -14,11 +14,41 @@ void Console::clear()
     this->clear();
 }
 
+
 void Console::write(string msg)
 {
     QString qstring;
     qstring=QString::fromStdString(msg);
+    this->setTextColor( QColor(Qt::green));
     this->append(qstring);
+    //this->setTextColor(QColor(Qt::green));
+}
+
+void Console::writeErrorMsg(string msg)
+{
+    QString qstring;
+    qstring=QString::fromStdString(msg);
+    this->setTextColor(QColor(Qt::red));
+    this->append(qstring);
+    this->setTextColor(QColor(Qt::green));
+}
+
+void Console::writePrintMsg(string msg)
+{
+    QString qstring;
+    qstring=QString::fromStdString(msg);
+    this->setTextColor(QColor(Qt::yellow));
+    this->append(qstring);
+    this->setTextColor(QColor(Qt::green));
+}
+
+void Console::writeHelpMsg(string msg)
+{
+    QString qstring;
+    qstring=QString::fromStdString(msg);
+    this->setTextColor(QColor(Qt::cyan));
+    this->append(qstring);
+    this->setTextColor(QColor(Qt::green));
 }
 
 void Console::keyPressEvent(QKeyEvent *event)

@@ -15,7 +15,7 @@ public:
 private:
     string errorMessage;
 };
-extern
+
 void error(string errorMessage);
-void printToConsole(string errorMessage);
+
 #endif // ERROR_H

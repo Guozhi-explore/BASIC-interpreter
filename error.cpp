@@ -18,8 +18,3 @@ void error(string errorMessage)
 {
     throw ErrorException(errorMessage);
 }
-
-void printToConsole(string errorMessage)
-{
-    throw ErrorException(errorMessage);
-}
