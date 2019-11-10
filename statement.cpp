@@ -1,6 +1,7 @@
 #include "statement.h"
 #include"assert.h"
 
+
 statement::statement(){}
 
 statement::~statement(){}
@@ -21,9 +22,11 @@ void LetStatement::execute(evalstate &state)
     string leftName;
     int rightValue;
     leftExp=this->compoundexp->getLHS();
-    assert(leftExp->type()==IDENTIFIER);
+    if(leftExp->type()!=IDENTIFIER)
+        error("in LET expression,left-value should be Identifier");
     rightExp=this->compoundexp->getRHS();
-    assert(this->compoundexp->getOperator()=="=");
+    if(this->compoundexp->getOperator()!="=")
+        error("in LET expression,op should be =");
     rightValue=rightExp->eval(state);
     leftName=((IdentifierExp *)leftExp)->getIdentifierName();
     state.setValue(leftName,rightValue);
@@ -63,7 +66,7 @@ void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
 
 void InputStatement::execute(evalstate &state,Console &console)
 {
-    console.writePrintMsg("input "+this->identifierexp->getIdentifierName()+":");
+    console.writePrintMsg(" ? ");
     console.isInputValue=true;
     console.inputEvalstate=&state;
     console.inputIdentifierExp=this->identifierexp;

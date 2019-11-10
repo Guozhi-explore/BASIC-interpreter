@@ -88,7 +88,7 @@ void BasicWindow::handle(string input_line,program &_program, evalstate &_evalst
                     {
                         console.writeHelpMsg("if you are not familiar with BASIC yet, look at\n"
                               "https://ipads.se.sjtu.edu.cn/courses/sep/proj2.pdf\n"
-                              "for more information\n");
+                              "for more information");
                     }
                     else{
                         if(token.token_string=="LIST")

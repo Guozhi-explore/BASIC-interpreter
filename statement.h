@@ -4,7 +4,7 @@
 #include<iostream>
 #include "evalstate.h"
 #include"exp.h"
-#include"errno.h"
+#include"error.h"
 #include"Console.h"
 using namespace std;
 

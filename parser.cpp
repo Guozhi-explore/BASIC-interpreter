@@ -15,7 +15,13 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
     token=tokenizer.getToken();
     if(token.token_string=="LET")
     {
-        parseStatementResult=new LetStatement((CompoundExp*) parseExp(tokenizer));
+        exp *expression;
+        expression=parseExp(tokenizer);
+        if(expression->type()!=COMPOUND)
+        {
+            error("LET expression miss token");
+        }
+        parseStatementResult=new LetStatement((CompoundExp*) expression);
         return parseStatementResult;
     }
     if(token.token_string=="IF")
@@ -186,7 +192,8 @@ exp *parser::parseTokensByPrecedence(Tokenizer &tokenizer,int precedence)
     {
         token=tokenizer.getToken();
         newPrecedence=getPrecedence( token.token_string);
-        if(newPrecedence<=precedence)
+        // ^ is right combined
+        if(newPrecedence<=precedence&&token.token_string!="^")
         {
             break;
         }
