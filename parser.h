@@ -15,7 +15,13 @@ public:
     exp *parseExp(Tokenizer &tokenizer);
     int getPrecedence(string op);
 private:
+    /*
+     * return ID or NUMBEER or parentheses value
+     * */
     exp* parseParenthesesScopeToken(Tokenizer &tokenizer);
+    /*
+     *return a compound expression whose op's precedence is bigger than prioir one
+     * */
     exp* parseTokensByPrecedence(Tokenizer &tokenizer,int precedence);
 };
 

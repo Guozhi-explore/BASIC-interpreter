@@ -24,6 +24,7 @@ class Tokenizer{
         bool ignoreBlankFlag;
         string input_line;
         vector<Token> token_list;
+        //提前查看的token被返回到此处
         queue<Token> return_token;
 
         void addNewSymbol(string token_string);

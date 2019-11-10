@@ -22,9 +22,13 @@ public:
     void run(Console &console);
 
 private:
+    //source code for LIST statement
     map<int, string> sourceCodeArray;
+    //parsed statement array for RUN statement
     map<int,statement*> parsedStatementArray;
+    //next jump line number ,as STATEMENT like GOTO & IF will change next jump line
     map<int,int> nextStatementArray;
+    //store variable's value in the run process
     evalstate state;
 };
 

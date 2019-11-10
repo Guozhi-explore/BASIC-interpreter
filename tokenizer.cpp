@@ -8,7 +8,9 @@ Tokenizer::Tokenizer(string input_line)
     this->input_line=input_line;
     this->parseInputLineToTokenList();
 }
-
+/*
+ * parse tokens use blank space
+ * */
 void Tokenizer::parseInputLineToTokenList ()
 {
     int index=0;
@@ -42,13 +44,8 @@ void Tokenizer::addNewSymbol(string token_string)
     Token token;
     token.token_string=token_string;
 
-    //judge string is string or not
-    if(token_string[0]=='\"')
-    {
 
-    }
-
-    //judge string is ID&RESERVE or not
+    //judge string is ID||RESERVE||NUMBER or not
     int string_head=0,string_rear=0;
     for(int i=0;i<token_string.size();++i)
     {
@@ -97,6 +94,8 @@ void Tokenizer::addNewSymbol(string token_string)
     }
 
 }
+
+//getToken() func can help parse and main to select suitable parse choice
 Tokenizer::Token Tokenizer::getToken()
 {
     if(return_token.empty()==false)

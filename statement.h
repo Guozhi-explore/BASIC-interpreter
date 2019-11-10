@@ -14,6 +14,12 @@ class statement
 public:
      statement();
     virtual ~statement();
+    /*
+     * state to store variable's value
+     * nextStatementArray to store next jump line information
+     * currentline is nextStatementArray 's index
+     * console to print of receive user input in the console
+     * */
     virtual void execute(evalstate & state,map<int,int> &nextStatementArray,int currentLine,Console &console) = 0;
 };
 

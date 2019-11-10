@@ -68,7 +68,11 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
     }
     if(token.token_string=="INPUT")
     {
-        parseStatementResult=new InputStatement((IdentifierExp*) parseExp(tokenizer));
+        exp *expression;
+        expression=parseExp(tokenizer);
+        if(expression->type()!=IDENTIFIER)
+            error("INPUT expression left-value should be identifier");
+        parseStatementResult=new InputStatement((IdentifierExp*)expression);
         return parseStatementResult;
     }
     if(token.token_string=="GOTO")
@@ -86,92 +90,6 @@ statement *parser::parseStatement(Tokenizer &tokenizer)
     error("syntax error");
     return nullptr;
 }
-//versio of ugly exp parser
-/*
- *
-exp *parser::parseExp(Tokenizer &tokenizer)
-{
-    int originPrecedence=0,newPrecedence=0;
-    stack<string> opStack;
-    stack<exp*> valueStack;
-    string oldOpExp;
-    exp *newValueExp,*oldValueExp1,*oldValueExp2;
-    while(tokenizer.hasMoreToken())
-    {
-        Tokenizer::Token token;
-        token=tokenizer.getToken();
-        if(token.token_type==Tokenizer::OPERATOR)
-        {
-            newPrecedence=this->getPrecedence(token.token_string);
-            if(token.token_string=="(")
-            {
-                opStack.push(token.token_string);
-                continue;
-            }
-            while(newPrecedence<=originPrecedence&&opStack.empty()==false&&valueStack.empty()==false)
-            {
-                oldOpExp=opStack.top();
-                opStack.pop();
-                oldValueExp1=valueStack.top();
-                if(valueStack.empty()){
-                    printf("illegal expression\n");
-                    return nullptr;
-                }
-                valueStack.pop();
-                oldValueExp2=valueStack.top();
-                newValueExp=new CompoundExp(oldOpExp,oldValueExp1,oldValueExp2);
-                valueStack.push(newValueExp);
-                if(!opStack.empty())
-                    originPrecedence=this->getPrecedence(opStack.top());
-            }
-            if(opStack.empty()==false&&opStack.top()=="("&&token.token_string==")")
-                opStack.pop();
-            opStack.push(token.token_string);
-        }
-        else{
-            if(token.token_type==Tokenizer::NUMBER)
-            {
-                newValueExp=new ConstantExp(atoi(token.token_string.c_str()));
-                valueStack.push(newValueExp);
-            }else{
-                if(token.token_type==Tokenizer::ID)
-                {
-                    newValueExp=new IdentifierExp(token.token_string);
-                    valueStack.push(newValueExp);
-                }
-                else{
-                    printf("illegal expression\n");
-                    return nullptr;
-                }
-            }
-        }
-    }
-    while(!opStack.empty()&&!valueStack.empty())
-    {
-        oldOpExp=opStack.top();
-        opStack.pop();
-        oldValueExp1=valueStack.top();
-        valueStack.pop();
-        if(valueStack.empty()==true)
-        {
-            printf("illegal expression\n");
-            return nullptr;
-        }
-        oldValueExp2=valueStack.top();
-        valueStack.pop();
-        newValueExp=new CompoundExp(oldOpExp,oldValueExp1,oldValueExp2);
-        valueStack.push(newValueExp);
-    }
-    newValueExp=valueStack.top();
-    valueStack.pop();
-    if(opStack.empty()==false||valueStack.empty()==false)
-    {
-        printf("illegal expression\n");
-        return nullptr;
-    }
-    return newValueExp;
-}
-*/
 
 exp * parser::parseExp(Tokenizer &tokenizer)
 {
@@ -222,7 +140,7 @@ exp* parser::parseParenthesesScopeToken(Tokenizer &tokenizer)
     exp=parseTokensByPrecedence(tokenizer,0);
     if(tokenizer.getToken().token_string!=")")
     {
-        error("( and ) unblanced");
+        error("expected )");
         return nullptr;
     }
     return exp;

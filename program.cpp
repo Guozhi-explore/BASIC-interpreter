@@ -75,6 +75,7 @@ void program::run(Console &console)
         //REM expression return nullptr when parsing
         if(parsedStatementArray[lineNumber]!=nullptr)
         {
+            //execute process may change nextlinenumber
             parsedStatementArray[lineNumber]->execute(state,nextStatementArray,lineNumber,console);
         }
         lineNumber=nextStatementArray[lineNumber];

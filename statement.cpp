@@ -59,6 +59,7 @@ InputStatement::InputStatement(IdentifierExp *identifierExp)
     identifierexp=identifierExp;
 }
 
+//in this way, run process can't input a value
 void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,int currentLine,Console &console)
 {
    this->execute(state,console);
@@ -66,6 +67,7 @@ void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
 
 void InputStatement::execute(evalstate &state,Console &console)
 {
+
     console.writePrintMsg(" ? ");
     console.isInputValue=true;
     console.inputEvalstate=&state;

@@ -15,6 +15,7 @@ public:
     void clear();
 
 private:
+    //store id's value
     map<string,int> symbolTable;
 
 };

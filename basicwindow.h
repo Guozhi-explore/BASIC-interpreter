@@ -25,6 +25,8 @@ private:
     evalstate _evalstate;
     static const int BASIC_WINDOW_WIDTH = 500;
     static const int BASIC_WINDOW_HEIGHT = 600;
+
+    // save and handle each input_line
     void handle(string input_line,program &_program, evalstate &_evalstate,Console &console);
 };
 #endif // BASICWINDOW_H

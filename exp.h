@@ -17,12 +17,6 @@ public:
    // virtual string toString()=0;
     virtual ExpressionType type()=0;
 
-    /*getter methods for convenience*/
-   /* virtual int getConstantValue();
-    virtual string getIdentifierName();
-    virtual string getOperator();
-    virtual exp *getLHS();
-    virtual exp *getRHS();*/
 };
 
 class ConstantExp: public exp{
