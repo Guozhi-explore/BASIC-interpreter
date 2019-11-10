@@ -63,10 +63,10 @@ void InputStatement::execute(evalstate &state, map<int,int> &nextStatementArray,
 
 void InputStatement::execute(evalstate &state,Console &console)
 {
-    int value;
     console.write("input "+this->identifierexp->getIdentifierName()+":");
-    value=console.getInputValue();
-    state.setValue(this->identifierexp->getIdentifierName(),value);
+    console.isInputValue=true;
+    console.inputEvalstate=&state;
+    console.inputIdentifierExp=this->identifierexp;
     return;
 }
 GotoStatement::GotoStatement(exp *exp)

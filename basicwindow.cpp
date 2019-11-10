@@ -19,6 +19,16 @@ BasicWindow::~BasicWindow()
 
 void BasicWindow::receiveNewLine(string str)
 {
+    //INPUT EXPRESSION,WAIT CONSOLE INPUT A VALUE
+    if(this->console->isInputValue==true){
+        int value=atoi(str.c_str());
+        this->console->inputEvalstate->setValue(
+                    this->console->inputIdentifierExp->getIdentifierName(),
+                    value);
+        this->console->isInputValue=false;
+        return;
+    }
+    //regular code input
     try{
         this->handle(str,_program,_evalstate,*console);
     }

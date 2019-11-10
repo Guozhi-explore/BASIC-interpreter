@@ -5,7 +5,8 @@
 #include <QTextEdit>
 #include <QWidget>
 #include <iostream>
-#include<semaphore.h>
+#include "evalstate.h"
+#include"exp.h"
 using namespace std;
 
 class Console : public QTextEdit
@@ -13,7 +14,6 @@ class Console : public QTextEdit
     Q_OBJECT
 public:
     explicit Console(QWidget *parent = nullptr);
-    int getInputValue();
 signals:
     void newLineWritten(string newline);
 
@@ -23,10 +23,11 @@ public slots:
 
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
-private:
-    bool valueInputFlag=false;
-    int inputValue;
-    sem_t waitForInput;
+
+public:
+    evalstate *inputEvalstate;
+    IdentifierExp *inputIdentifierExp;
+    bool isInputValue=false;
 };
 
 #endif // CONSOLE_H
