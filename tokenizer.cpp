@@ -73,16 +73,7 @@ void Tokenizer::addNewSymbol(string token_string)
                     //delete last token which is *
                     this->token_list.erase(token_list.end()-1);
                 }
-                /*//add a token 0 before negative symbol,when a negative symbol is the first symbol or follows
-                //(,+,*,/,=,>,<,^,-
-                if(token.token_string=="-")
-                {
-                    printf("%s\n",this->token_list.back().token_string.c_str());
-                    if(this->token_list.empty()||(isOperator(this->token_list.back().token_string[0])&&this->token_list.back().token_string!=")"))
-                    {
-                        token.token_string
-                    }
-                }*/
+
                 this->token_list.push_back(token);
                 string_head=i+1;
             }
@@ -164,6 +155,7 @@ void Tokenizer::addIdOrReserveOrNumber (string token_string)
     if(is_number==true)
     {
         token.token_type=NUMBER;
+        //case negative number
         //if number follows a negative operator,modify its token_string
         if(!this->token_list.empty()&&this->token_list.back().token_string=="-")
         {

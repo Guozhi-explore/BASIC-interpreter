@@ -22,7 +22,9 @@ public slots:
 private:
     HandleInputLineThread *thread;
     Console *console;
+    //keep program statement and value state for number command
     program _program;
+    //keep value state for none-number command
     evalstate _evalstate;
     static const int BASIC_WINDOW_WIDTH = 500;
     static const int BASIC_WINDOW_HEIGHT = 600;

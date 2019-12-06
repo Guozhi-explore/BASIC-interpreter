@@ -43,6 +43,10 @@ void BasicWindow::receiveNewLine(string str)
     // handle errors as syntax error should not lead the program to exit
     catch (ErrorException & ex) {
          if(ex.getMessage()!="") {
+             if(ex.getMessage()=="QUIT")
+             {
+                 error("QUIT");
+             }
             console->writeErrorMsg(ex.getMessage());
          }
       }

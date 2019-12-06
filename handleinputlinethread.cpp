@@ -13,7 +13,7 @@ void HandleInputLineThread::handle(string input_line,program &_program, evalstat
     statement *statement;
     int lineNumber;
     token=tokenizer.getToken();
-
+    //program is running in the input statement,need rerun
     if(programRerun)
     {
         try{
@@ -63,7 +63,7 @@ void HandleInputLineThread::handle(string input_line,program &_program, evalstat
             }else{
                 if(token.token_string=="QUIT")
                 {
-                    exit(0);
+                    error("QUIT");
                 }
                 else{
                     if(token.token_string=="HELP")
