@@ -21,6 +21,7 @@ BasicWindow::~BasicWindow()
 
 void BasicWindow::receiveNewLine(string str)
 {
+    bool programRerun=false;
     //get the input value in INPUT expression if prior order is INPUT
     if(this->console->isInputValue==true){
         int value=atoi(str.c_str());
@@ -28,11 +29,16 @@ void BasicWindow::receiveNewLine(string str)
                     this->console->inputIdentifierExp->getIdentifierName(),
                     value);
         this->console->isInputValue=false;
-        return;
+        if(this->console->isProgramInput==false)
+        {
+            return;
+        }
+        programRerun=true;
+        this->console->isProgramInput=false;
     }
     //normal code line input
     try{
-        thread->handle(str,_program,_evalstate,*console);
+        thread->handle(str,_program,_evalstate,*console,programRerun);
     }
     // handle errors as syntax error should not lead the program to exit
     catch (ErrorException & ex) {

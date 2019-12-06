@@ -175,7 +175,6 @@ void Tokenizer::addIdOrReserveOrNumber (string token_string)
                 this->token_list.erase(token_list.end()-1);
                 token.token_string="-"+token.token_string;
             }
-
         }
         this->token_list.push_back(token);
         return;

@@ -13,7 +13,7 @@ class HandleInputLineThread:public QThread
     Q_OBJECT
 public:
     HandleInputLineThread();
-    void handle(string input_line,program &_program, evalstate &_evalstate,Console &console);
+    void handle(string input_line,program &_program, evalstate &_evalstate,Console &console,bool programRerun);
 private:
 
 public slots:

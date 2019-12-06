@@ -5,7 +5,7 @@ HandleInputLineThread::HandleInputLineThread()
 }
 
 
-void HandleInputLineThread::handle(string input_line,program &_program, evalstate &_evalstate,Console &console)
+void HandleInputLineThread::handle(string input_line,program &_program, evalstate &_evalstate,Console &console,bool programRerun)
 {
     parser parser;
     Tokenizer tokenizer(input_line);
@@ -14,6 +14,16 @@ void HandleInputLineThread::handle(string input_line,program &_program, evalstat
     int lineNumber;
     token=tokenizer.getToken();
 
+    if(programRerun)
+    {
+        try{
+        _program.rerun(console);
+        }
+        catch (ErrorException ) {
+            //input statement will throw error to wait for user input
+         }
+        return;
+    }
     switch (token.token_type) {
     case Tokenizer::NONE:
         break;
@@ -38,7 +48,12 @@ void HandleInputLineThread::handle(string input_line,program &_program, evalstat
     {
         if(token.token_string=="RUN")
         {
+            try{
             _program.run(console);
+            }
+            catch (ErrorException ) {
+                //input statement will throw error to wait for user input
+             }
             return;
         }else{
             if(token.token_string=="CLEAR")

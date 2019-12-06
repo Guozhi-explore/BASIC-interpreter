@@ -36,6 +36,7 @@ public:
     int getInputValue();
     bool INPUTstatement=false;
     int inputValue;
+    bool isProgramInput=false;
 };
 
 #endif // CONSOLE_H

@@ -47,6 +47,28 @@ void program::clear()
     this->parsedStatementArray.clear();
 }
 
+void program::rerun(Console &console)
+{
+    int lineNumber=this->nextStatementArray[this->currentLine];
+    do{
+        if(parsedStatementArray.find(lineNumber)==parsedStatementArray.end())
+        {
+            error("jump to line which not declared,aborted");
+            return;
+        }
+        //REM expression return nullptr when parsing
+        if(parsedStatementArray[lineNumber]!=nullptr)
+        {
+            this->currentLine=lineNumber;
+            //execute process may change nextlinenumber
+            parsedStatementArray[lineNumber]->execute(state,nextStatementArray,lineNumber,console);
+        }
+        lineNumber=nextStatementArray[lineNumber];
+    }
+    // lineNumber is set to -1 in the end statement
+    while(lineNumber!=-1);
+}
+
 void program::run(Console &console)
 {
     this->nextStatementArray.clear();
@@ -75,6 +97,7 @@ void program::run(Console &console)
         //REM expression return nullptr when parsing
         if(parsedStatementArray[lineNumber]!=nullptr)
         {
+            this->currentLine=lineNumber;
             //execute process may change nextlinenumber
             parsedStatementArray[lineNumber]->execute(state,nextStatementArray,lineNumber,console);
         }

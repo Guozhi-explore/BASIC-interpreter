@@ -20,6 +20,7 @@ public:
     void ListSourceCode(Console &console);
     void clear();
     void run(Console &console);
+    void rerun(Console &console);
 
 private:
     //source code for LIST statement
@@ -30,6 +31,7 @@ private:
     map<int,int> nextStatementArray;
     //store variable's value in the run process
     evalstate state;
+    int currentLine;
 };
 
 #endif // PROGRAM_H
