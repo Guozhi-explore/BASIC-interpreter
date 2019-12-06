@@ -120,7 +120,6 @@ exp *parser::parseTokensByPrecedence(Tokenizer &tokenizer,int precedence)
     }
     tokenizer.saveToken(token);
     return leftexp;
-
 }
 exp* parser::parseParenthesesScopeToken(Tokenizer &tokenizer)
 {

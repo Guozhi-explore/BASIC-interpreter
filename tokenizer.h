@@ -17,6 +17,10 @@ class Tokenizer{
             this->token_type=NONE;
             token_string="";
         }
+        Token(tokenType tokentype,string token_string){
+            this->token_type=tokentype;
+            this->token_string=token_string;
+        }
     };
 
     private:
